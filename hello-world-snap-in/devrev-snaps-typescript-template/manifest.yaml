@@ -1,0 +1,33 @@
+# For reference: https://docs.devrev.ai/snap-ins/references/manifest.
+# Refactor the code based on your business logic.
+version: "2"
+name: "hello-world-snap-in"
+description: "A simple snap-in that says hello"
+
+service_account:
+  display_name: "Hello World Bot"
+
+event_sources:
+  organization:
+    - name: devrev-event-source
+      description: "Event source for work item events"
+      display_name: DevRev events listener
+      type: devrev-webhook
+      config:
+        event_types:
+          - work_item.created
+
+functions:
+  - name: say_hello
+    description: "Function to say hello"
+    
+
+automations:
+  - name: hello_world_automation
+    description: "Automation to say hello when a work item is created"
+    source: devrev-event-source
+    event_types:
+      - work_item.created
+    function: say_hello
+
+
